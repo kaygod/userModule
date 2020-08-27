@@ -6,8 +6,8 @@ const transporter = nodemailer.createTransport({
   port: 587, //端口号
   secure: false, //465为true,其他为false
   auth: {
-    user: '2458861064@qq.com', // 自己的邮箱
-    pass: 'wilcwtrxhjrqebhf', // 授权码
+    user: 'xxxxxxxx@qq.com', // 自己的邮箱
+    pass: '---------', // 授权码
   },
 });
 
@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 exports.sendRegisterEmail = ({ user_id, email, verify_key }) => {
   const url = `${service_ip}/regiter_success?id=${user_id}&verify_key=${verify_key}`;
   const params = {
-    from: '蜗牛书斋<2458861064@qq.com>', // 收件人显示的发件人信息
+    from: '梁朝伟<xxxxxxxx@qq.com>', // 收件人显示的发件人信息
     to: email, // 目标邮箱号
     subject: '注册新用户',
     html: `点击链接即可注册完毕:<a style="color:red" href="${url}">${url}</a>`,
@@ -31,7 +31,7 @@ exports.sendRegisterEmail = ({ user_id, email, verify_key }) => {
  */
 exports.sendCode = ({ email, verify_key }) => {
   const params = {
-    from: '蜗牛书斋<2458861064@qq.com>', // 收件人显示的发件人信息
+    from: '梁朝伟<xxxxxxxx@qq.com>', // 收件人显示的发件人信息
     to: email, // 目标邮箱号
     subject: '找回密码',
     html: `邮箱验证码:${verify_key}`,
