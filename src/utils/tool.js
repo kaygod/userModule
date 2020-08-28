@@ -10,7 +10,6 @@ const { security } = require('../config');
  */
 exports.md5 = (data) => {
   const md5Handler = crypto.createHmac('md5', salt).update(data);
-
   return md5Handler.digest('hex');
 };
 

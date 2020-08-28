@@ -1,6 +1,6 @@
 const { addUser, userIsExist, updateUserInfo } = require('../service/user');
 const { Success, Fail } = require('../models/Response');
-const { md5, generateNumber } = require('../utils/tool');
+const { md5, generateNumber, generateToken } = require('../utils/tool');
 const { v4: uuidv4 } = require('uuid');
 const { sendRegisterEmail } = require('../provider/email');
 const {
@@ -73,4 +73,22 @@ exports.verifyKey = async ({ user_id, verify_key }) => {
     status: 0,
   });
   return new Success();
+};
+
+exports.login = async ({ user_name, password }, ctx) => {
+  //验证用户名密码是否正确
+  const userInfo = await userIsExist({ user_name, password: md5(password) });
+  if (userInfo == null) {
+    return {
+      error_no: 51,
+      message: '用户名或密码错误',
+    };
+  }
+  ctx.session[(`user_id_${userInfo.user_id}`, userInfo)];
+  const token = generateToken(userInfo.user_id, 1);
+  userInfo.token = token;
+  return {
+    error_no: 0,
+    message: userInfo,
+  };
 };
